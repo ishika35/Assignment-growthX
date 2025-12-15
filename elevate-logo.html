@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELEVATE</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Tenor Sans', sans-serif;
+        }
+
+        /* Star */
+        .star {
+            width: 130px;
+            height: 130px;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+            animation: starSlide 1.8s ease-out forwards, starGlow 3s ease-in-out 2.5s infinite;
+            transform: translate(-150px, -80px) rotate(-350deg) scale(0.4);
+            opacity: 0;
+        }
+
+        .star-fill {
+            fill: #fff;
+        }
+
+        /* Funnel */
+        .funnel {
+            width: 280px;
+            height: 160px;
+        }
+
+        .funnel-outline-left,
+        .funnel-outline-right {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 1;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawLine 1.8s ease-out forwards;
+        }
+
+        .funnel-fill {
+            fill: #fff;
+            clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+            animation: fillDiagonal 1s ease-out 1s forwards;
+        }
+
+        /* Text */
+        .brand-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 50px;
+            letter-spacing: 0.7em;
+            background: linear-gradient(180deg, #ffffff 0%, #d4d4d4 50%, #acacac 100%);
+            background-clip: text;
+            color: transparent;
+            animation: slideUp 1s ease-out 2s forwards;
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        /* Animations */
+        @keyframes starSlide {
+            to {
+                transform: translate(0, 0) rotate(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fillDiagonal {
+            to {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes starGlow {
+            50% {
+                filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3));
+            }
+        }
+
+        /* Fade out entire logo */
+        #logo {
+            animation: fadeOut 1.0s ease-out 4s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+
+<body class="d-flex justify-content-center align-items-center min-vh-100 bg-black">
+    <div class="text-center">
+        <div id="logo">
+            <!-- Star -->
+            <div class="star mx-auto">
+                <svg viewBox="0 0 100 100">
+                    <path class="star-fill" d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0Z" />
+                </svg>
+            </div>
+
+            <!-- Funnel -->
+            <div class="funnel mx-auto mt-2">
+                <svg viewBox="0 0 100 50">
+                    <!-- Left outline: bottom center → top left -->
+                    <path class="funnel-outline-left" d="M50 50 Q50 0 0 0" />
+                    <!-- Right outline: bottom center → top right -->
+                    <path class="funnel-outline-right" d="M50 50 Q50 0 100 0" />
+                    <path class="funnel-fill" d="M0 0 L100 0 Q50 0 50 50 Q50 0 0 0Z" />
+                </svg>
+            </div>
+
+            <!-- Text -->
+            <div class="brand-text text-center mt-5 fw-semibold">ELEVATE</div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!--
+=====================
+CSS REFERENCE NOTES
+=====================
+
+1. CLIP-PATH ANIMATION (funnel-fill)
+   - Initial: polygon(0 0, 0 0, 0 100%, 0 100%) → Hidden (zero width)
+   - Final: polygon(0 0, 100% 0, 100% 100%, 0 100%) → Fully visible
+   - Animation: fillDiagonal 1s ease-out 1s forwards
+
+2. STROKE-DASHARRAY & STROKE-DASHOFFSET (funnel-outline)
+   - stroke-dasharray: 100 → Dash pattern length
+   - stroke-dashoffset: 100 → Hides entire stroke initially
+   - Animation: drawLine 1.8s ease-out forwards → Draws from bottom center up both sides
+
+3. TRANSFORM PROPERTIES (star)
+   - Initial: translate(-150px, -80px) rotate(-350deg) scale(0.4)
+   - Final: translate(0, 0) rotate(0) scale(1)
+   - Creates slide-in effect from upper-left with spin
+
+4. ANIMATIONS USED
+   - starSlide: 1.8s ease-out forwards → Star entrance
+   - starGlow: 3s ease-in-out 2.5s infinite → Pulsing glow after entrance
+   - drawLine: 1.8s ease-out forwards → Funnel outline drawing
+   - fillDiagonal: 1s ease-out 1s forwards → Funnel fill reveal
+   - slideUp: 1s ease-out 2.2s forwards → Text entrance
+   - fadeOut: 1.0s ease-out 4s forwards → Logo exit
+
+5. BACKGROUND-CLIP: TEXT (brand-text)
+   - Gradient: linear-gradient(180deg, #ffffff 0%, #d4d4d4 50%, #acacac 100%)
+   - background-clip: text + color: transparent → Shows gradient through text
+
+6. SVG PATH COMMANDS
+   - Star: M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0Z (4-point star)
+   - Funnel outline left: M50 50 Q50 0 0 0 (bottom center → top left)
+   - Funnel outline right: M50 50 Q50 0 100 0 (bottom center → top right)
+   - Funnel fill: M0 0 L100 0 Q50 0 50 50 Q50 0 0 0Z (full shape)
+
+7. DROP-SHADOW FILTER (star)
+   - Base: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2))
+   - Glow pulse: drop-shadow(0 0 12px rgba(255, 255, 255, 0.3))
+-->
